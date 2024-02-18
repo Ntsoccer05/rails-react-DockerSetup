@@ -21,7 +21,7 @@ docker compose -f docker-compose-dev.yml run app rake db:create</pre>
 
 ポスグレのホスト名、ユーザー名など変更時はvolumeを削除し<br>
 docker-compose build --no-cache<br>
-を行う。<br>
+を行う必要あり。<br>
 今回の場合、docker-compose.ymlにて<br>
 <pre>
 db:
