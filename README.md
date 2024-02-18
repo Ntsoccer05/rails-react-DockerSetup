@@ -53,7 +53,7 @@ https://osu-log.com/archives/379<br>
 
 Vite作成時にできたpackage.jsonをfrontendフォルダ直下にコピー</br>
 package.json内で以下変更<br>
-~~"dev": "vite"~~ ➞ "dev": "vite --host"
+<pre><s>"dev": "vite"</s> ➞ "dev": "vite --host"</pre>
 
 
 
