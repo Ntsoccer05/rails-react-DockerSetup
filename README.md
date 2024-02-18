@@ -39,7 +39,7 @@ db:
       - "${DB_PORT}:5432"
 </pre>
 よりvolumeはdockerフォルダ内に値するため、dockerフォルダを削除する必要がある。<br>
-<a>https://halkyo.com/post/web/docker-rails-postgresql-active-record-database-connection-error</a>
+<a>https://halkyo.com/post/web/docker-rails-postgresql-active-record-database-connection-error</a><br>
 
 ## フロントをReact×TypeScript×Vite対応方法
 
@@ -62,7 +62,7 @@ docker compose exec front bash</br>
 cd app<br>
 npm run dev<br>
 
-docker-compose.ymlで設定したポート番号にて表示できると完了
+docker-compose.ymlで設定したポート番号にて表示できると完了<br>
 
 ## Pgadminを表示する方法
 
