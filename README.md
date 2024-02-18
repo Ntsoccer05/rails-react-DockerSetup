@@ -1,4 +1,4 @@
-## Rails×React×TypeScript×Vite×PostgreSql 環境構築
+# Rails×React×TypeScript×Vite×PostgreSql 環境構築
 
 参照元：<br>
 <a>https://zenn.dev/dsakai07/articles/84ceb379cffbcb</a><br>
@@ -41,7 +41,7 @@ db:
 よりvolumeはdockerフォルダ内に値するため、dockerフォルダを削除する必要がある。<br>
 <a>https://halkyo.com/post/web/docker-rails-postgresql-active-record-database-connection-error</a>
 
-### フロントをReact×TypeScript×Vite対応方法
+## フロントをReact×TypeScript×Vite対応方法
 
 参照元：<br>
 <a>https://zenn.dev/dsakai07/articles/84ceb379cffbcb</a><br>
