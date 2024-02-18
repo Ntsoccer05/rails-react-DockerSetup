@@ -13,10 +13,10 @@ docker-compose run --no-deps api rails new . --force --database=postgresql --api
 を元に開発環境用と本番環境用に分ける<br>
 
 docker-compose.ymlをdocker-compose-dev.ymlに変更した場合以下コマンドとなる<br>
-<pre>docker compose -f docker-compose-dev.yml build<br>
-docker compose -f docker-compose-dev.yml up -d<br>
-docker compose -f docker-compose-dev.yml down<br>
-docker compose -f docker-compose-dev.yml exec app bash<br>
+<pre>docker compose -f docker-compose-dev.yml build
+docker compose -f docker-compose-dev.yml up -d
+docker compose -f docker-compose-dev.yml down
+docker compose -f docker-compose-dev.yml exec app bash
 docker compose -f docker-compose-dev.yml run app rake db:create</pre>
 
 ポスグレのホスト名、ユーザー名など変更時はvolumeを削除しdocker-compose build --no-cache<br>
