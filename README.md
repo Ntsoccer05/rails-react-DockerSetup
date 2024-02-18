@@ -1,4 +1,4 @@
-# Rails×React×TypeScript×Vite×PostgreSql 環境構築
+# Rails×React×TypeScript×Vite×PostgreSql×Pgadmin 環境構築
 
 参照元：<br>
 <a>https://zenn.dev/dsakai07/articles/84ceb379cffbcb</a><br>
@@ -63,3 +63,23 @@ cd app<br>
 npm run dev<br>
 
 docker-compose.ymlで設定したポート番号にて表示できると完了
+
+## Pgadminを表示する方法
+
+参照元：<br>
+<a>https://pote-chil.com/blog/docker-postgres-pgadmin</a><br>
+
+docker-compose.ymlのvolumeで以下のように設定している場合、
+<pre>
+    volumes:
+    # var/lib/pgadminのフォルダを作成しておく必要あり
+      - ./docker/pgadmin:/var/lib/pgadmin
+</pre>
+docker/pgadminフォルダの権限をWritableに変更する必要がある。<br>
+
+docker compose up -d<br>
+localhost:${PGADMIN_PORT}<br>
+PGADMIN_DEFAULT_EMAIL、PGADMIN_DEFAULT_PASSWORDの値でログイン<br>
+
+ログインできたら完了
+
