@@ -53,9 +53,8 @@ https://osu-log.com/archives/379<br>
 
 Vite作成時にできたpackage.jsonをfrontendフォルダ直下にコピー</br>
 package.json内で以下変更<br>
-<pre>
 ~~"dev": "vite"~~ ➞ "dev": "vite --host"
-</pre>
+
 
 
 docker compose up -d</br>
