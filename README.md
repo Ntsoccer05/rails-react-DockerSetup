@@ -83,8 +83,7 @@ PGADMIN_DEFAULT_EMAIL、PGADMIN_DEFAULT_PASSWORDの値でログイン<br>
 
 ログインできたら完了
 
-## RailsとReactを紐づける
-<h3>rack-corsを有効化</h3>
+## RailsとReactを紐づける（rack-corsを有効化）
 Gemfileの以下コードのコメントアウトを外す。<br>
 <pre>gem "rack-cors"</pre>
 
