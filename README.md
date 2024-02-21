@@ -83,3 +83,40 @@ PGADMIN_DEFAULT_EMAIL、PGADMIN_DEFAULT_PASSWORDの値でログイン<br>
 
 ログインできたら完了
 
+## RailsとReactを紐づける
+<h3>rack-corsを有効化</h3>
+Gemfileの以下コードのコメントアウトを外す。<br>
+<pre>gem "rack-cors"</pre>
+
+backend/config/initializers/cors.rbに以下を追記する。
+<pre>
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+        allow do
+            origins 'localhost:3001' # フロントエンドのURLを指定
+            resource '*',
+            headers: :any,
+            methods: [:get, :post, :put, :patch, :delete, :options, :head]
+        end
+    end
+</pre>
+
+docker compose exec front bash<br>
+bundle install<br>
+
+## 必要なパッケージをインストール
+参照元：<br>
+<a>https://pote-chil.com/blog/docker-postgres-pgadmin](https://musclecoding.com/rails-gem-recommended/)https://musclecoding.com/rails-gem-recommended</a><br>
+
+上記参照URLにて必要なパッケージをbackend/Gemfileに記載する。<br>
+
+<p style="color:red">※devise_token_authはrails7に対応していないため以下のように記載する</p>
+<pre>
+    gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
+</pre>
+<a>https://stackoverflow.com/questions/71062789/error-using-devise-token-auth-gem-rails-7</a><br>
+
+必要なパッケージを記載完了後以下コマンドをたたく
+<pre>
+    docker compose exec front bash
+    bundle install
+</pre>
