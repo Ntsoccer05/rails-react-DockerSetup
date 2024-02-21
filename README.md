@@ -108,7 +108,7 @@ bundle install<br>
 
 上記参照URLにて必要なパッケージをbackend/Gemfileに記載する。<br>
 
-<p style="color:red">※devise_token_authはrails7に対応していないため以下のように記載する</p>
+<p style="color:red; border-bottom: 1px, solid, red;">※devise_token_authはrails7に対応していないため以下のように記載する</p>
 <pre>
     gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
 </pre>
