@@ -2,9 +2,9 @@
 
 <h3>Rails<h3>
 <ul>
-    <li>Rails ガイド : <a>https://railsguides.jp/getting_started.html </a></li>
+    <li>Rails ガイド : <a>https://railsguides.jp/getting_started.html</a></li>
     <li>Rails チュートリアル : <a>https://railstutorial.jp/chapters/beginning?version=7.0#cha-beginning</a></li>
-    <li>Rails ドキュメント : <a>https://railsdoc.com/</a></li>
+    <li>Rails ドキュメント : <a>https://railsdoc.com</a></li>
     <li>Rails プログラミングチュートリアル : <a>https://youtu.be/CfdRXSrwLDo?si=uIx8NUZCopNZadd4</a></li>
 </ul>
 <hr>
