@@ -15,6 +15,7 @@
     <li><a href="https://www.udemy.com/course/react_v18/learn/lecture/34057558?start=0#overview">React v18</a></li>
     <li><a href="https://www.udemy.com/course/typescript-timep/learn/lecture/36471738?start=285#overvieww">React×TypeScript</a></li>
 </ul>
+    useEffectはVueでいうWatchと同様
 <hr>
 <h3>レイアウト作成<h3>
 <ul>
