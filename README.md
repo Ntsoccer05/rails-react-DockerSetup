@@ -8,7 +8,7 @@
     <li><a href="https://youtu.be/CfdRXSrwLDo?si=uIx8NUZCopNZadd4Rails"> プログラミングチュートリアル</a></li>
 </ul>
 <hr>
-<h3 style="{fontWeight: 0.5}">React<h3>
+<h3>React<h3>
 <ul>
     <li><a href="https://www.udemy.com/course/modern_javascipt_react_beginner/learn/lecture/40838760#overview">基礎</a></li>
     <li><a href="https://www.udemy.com/course/react_stepup/learn/lecture/24823470?start=0#overview">Step2</a></li>
