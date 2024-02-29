@@ -18,6 +18,7 @@
 <div>
     <h4>メモ</h4>
     <p>useEffectはVueでいうWatchと同様</p>
+    <p>hooksフォルダはVueでいうComposableフォルダと同様。ファイル名はuseから始めること</p>
 </div>
 <hr>
 <h3>レイアウト作成<h3>
