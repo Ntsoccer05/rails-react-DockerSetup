@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchPosts = ()=>{
-  // 表示するカード内容(can_post=trueのみ)
+  // TODO 表示するカード内容(can_post=trueのみ)
   const result:PostData[] = [
     {
       id: 1,
@@ -45,7 +45,7 @@ const fetchPosts = ()=>{
     },
   ]
   return result
-  // データ取得（サーバー実装後）
+  // TODO データ取得（サーバー実装後）
   // const result = await axios.get<PostData[]>('/api/')
   // return result.data
 }
