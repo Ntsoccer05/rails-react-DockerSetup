@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
@@ -21,11 +21,11 @@ function classNames(...classes:string[]) {
 
 export const Header = () => {
   const {data} = useAuth();
-  const [ dispMessage, setDispMessage ] = useRecoilState(showMessage)
+  const [ dispMessage, setDispMessage ] = useRecoilState(showMessage);
 
   // メッセージを表示する処理
   const dispToastMessage = () => {
-    setDispMessage(!dispMessage)
+    setDispMessage(!dispMessage);
   }
 
   return (
