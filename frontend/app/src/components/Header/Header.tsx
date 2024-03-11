@@ -4,8 +4,10 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { Message } from '../Message/Message'
+import { Dialog } from '../Dialog/Dialog'
 import { useRecoilState } from "recoil"
 import { showMessage } from '../../store/showMessage'
+import { showDialog } from '../../store/showDialog'
 
 const navigation = [
   { name: 'ホーム', href: '#', current: true },
@@ -22,6 +24,7 @@ function classNames(...classes:string[]) {
 export const Header = () => {
   const {data} = useAuth();
   const [ dispMessage, setDispMessage ] = useRecoilState(showMessage);
+  const [ dispDialog, setDispDialog ] = useRecoilState(showDialog);
 
   // メッセージを表示する処理
   const dispToastMessage = () => {
@@ -145,6 +148,7 @@ export const Header = () => {
                           <Link
                               to="#"
                               className='text-gray-300 hover:bg-gray-700 hover:text-whitepx-3 py-2 text-sm font-medium'
+                              onClick={()=> setDispDialog(true)}
                           >
                               ログイン
                           </Link>
@@ -182,7 +186,8 @@ export const Header = () => {
           </>
         )}
       </Disclosure>
-      <Message status='warning' duration={5000}>遷移できません。</Message>
+      <Message status='info' title="遷移完了" duration={5000}>遷移できません。</Message>
+      <Dialog title="遷移完了">遷移できません。</Dialog>
     </>
   )
 }
