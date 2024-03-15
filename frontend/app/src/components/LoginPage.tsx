@@ -68,7 +68,7 @@ function LoginForm() {
                 <button type="submit">Login</button>
                 <p className="mb-0 mt-2 pt-1 text-sm font-semibold">
                   Don't have an account?{" "}
-                  <a href="#!" className="...">
+                  <a href="#!" className="register">
                     Register
                   </a>
                 </p>
