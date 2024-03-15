@@ -21,6 +21,6 @@ export const useAuth = () =>{
         // })
     },[])
 
-    data = undefined
+    // data = undefined
     return {data}
 }
