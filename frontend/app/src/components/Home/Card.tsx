@@ -1,63 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import {PostData} from "../../../types/api/PostData.ts"
+import { PostData } from "../../../types/api/PostData.ts"
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-
-const fetchPosts = ()=>{
-  // TODO 表示するカード内容(can_post=trueのみ)
-  const result:PostData[] = [
-    {
-      id: 1,
-      user_id: 1,
-      tag_id: 1,
-      category_id: 1,
-      content: "内容１",
-      title: "タイトル１",
-      can_post: true,
-      posted_at: "2024/03/05",
-      created_at: "2024/03/05",
-      updated_at: "2024/03/05"
-    },
-    {
-      id: 2,
-      user_id: 1,
-      tag_id: 1,
-      category_id: 1,
-      content: "内容２",
-      title: "タイトル２",
-      can_post: false,
-      posted_at: "2024/03/06",
-      created_at: "2024/03/06",
-      updated_at: "2024/03/06"
-    },
-    {
-      id: 3,
-      user_id: 1,
-      tag_id: 1,
-      category_id: 1,
-      content: "内容３",
-      title: "タイトル３",
-      can_post: true,
-      posted_at: "2024/03/07",
-      created_at: "2024/03/07",
-      updated_at: "2024/03/07"
-    },
-  ]
-  return result
-  // TODO データ取得（サーバー実装後）
-  // const result = await axios.get<PostData[]>('/api/')
-  // return result.data
-}
+import { fetchPosts } from "../../hooks/usePost.ts";
+import { useRecoilState } from "recoil";
+import { cardsData } from "../../store/cardsData.ts";
 
 export const Card = () => {
   const [like, haslike] = useState<boolean>(false);
 
+  const [ cards, setCards ] = useRecoilState(cardsData)
+
   // react-query v5 移行はオブジェクトにてuseQueryに設定する
-  const {data} = useQuery<PostData[]>({
+  const { data } = useQuery<PostData[]>({
     queryKey: ['posts'],
     queryFn: () => fetchPosts(),
   })
+
+  useEffect(()=>{
+    setCards( data )
+  }, [data])
 
   // お気に入りボタン押下時処理
   const liked = () => {
@@ -88,12 +50,13 @@ export const Card = () => {
             </div>
             <p className="px-1 text-sm">更新日：{post.updated_at}</p>
             <div className="px-1 py-4 mt-5">
-            <button
-              className="block w-full select-none rounded-lg bg-pink-500 py-2 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="button"
-              data-ripple-light="true"
-            ><Link to={"/detail" + post.id}></Link>Read More
-            </button>
+              <Link to={"/detail/" + post.id}>
+                <button
+                  className="block w-full select-none rounded-lg bg-pink-500 py-2 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="button"
+                  data-ripple-light="true"
+                >Read More</button>
+              </Link>
             </div>
           </div>
           )})}

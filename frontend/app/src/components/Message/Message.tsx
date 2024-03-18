@@ -5,7 +5,7 @@ import { TEToast } from "tw-elements-react";
 
 
 type Props = {
-    status: "info" | "warning" | "success" | "error",
+    status: string | undefined,
     title: string
     duration: number,
     children: string,
@@ -104,39 +104,39 @@ export const Message = (props: Props) => {
                 </div>
             </div>
         } */}
-            <div>
-                <TEToast staticToast open={dispMessage} autohide={true} delay={duration} setOpen={setDispMessage} color={`${bgColor} ${textColor}`} className="h-0 relative">
+            <div className="z-50">
+                <TEToast staticToast open={dispMessage} autohide={true} delay={duration} setOpen={setDispMessage} color={`${bgColor} ${textColor}`} className="h-0 fixed inset-0 text-center z-50">
                     <div className={`flex items-center justify-between rounded-t-lg border-b-2 border-opacity-100 bg-clip-padding px-4 pb-2 pt-2.5 + ${bgColor} ${borderColor}`}>
-                    <p className="font-bold text-base">
-                        {title}
-                    </p>
-                    <div className="flex items-center">
-                        <button
-                        type="button"
-                        className="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                        onClick={() => setDispMessage(false)}
-                        aria-label="Close"
-                        >
-                        <span className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
-                            <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-6 w-6"
+                        <p className="font-bold text-base">
+                            {title}
+                        </p>
+                        <div className="flex items-center">
+                            <button
+                            type="button"
+                            className="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                            onClick={() => setDispMessage(false)}
+                            aria-label="Close"
                             >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                            </svg>
-                        </span>
-                        </button>
+                            <span className="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-6 w-6"
+                                >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                                </svg>
+                            </span>
+                            </button>
+                        </div>
                     </div>
-                    </div>
-                    <div className={`break-words rounded-b-lg px-4 py-4  + ${bgColor}`}>
+                    <div className={`break-words rounded-b-lg px-4 py-4 text-left  + ${bgColor}`}>
                         {children}
                     </div>
                 </TEToast>

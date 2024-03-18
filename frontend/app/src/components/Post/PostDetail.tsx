@@ -1,86 +1,115 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { cardsData } from "../../store/cardsData";
+import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { PostData } from "../../../types/api/PostData";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts } from "../../hooks/usePost";
+import { useAuth } from "../../hooks/useAuth";
 
 export const PostDetail = () => {
+  // お気に入り登録
   const [like, haslike] = useState<boolean>(false);
+
+  // ポストカードID
+  const { id } = useParams()
+
+  // ログインユーザー情報取得
+  const { loginUserdata } = useAuth();
+
+  // 全てのカード情報
+  const [ getCardsData, setCardsData ] = useRecoilState(cardsData);
+  // ポストカードIDのカード情報
+  const [ cardsDataDetail, setCardsDataDetail ] = useState<PostData[]>([]);
+
+  // 全てのカード情報取得
+  const { data } = useQuery<PostData[]>({
+    queryKey: ['posts'],
+    queryFn: () => fetchPosts(),
+  })
+
+  // 全てのカード情報を設定
+  useEffect(()=>{
+    setCardsData( data )
+  }, [data])
+
+  // ポストカードIDのカード情報を設定
+  useEffect(()=>{
+    if(getCardsData && getCardsData?.length>0){
+      setCardsDataDetail(getCardsData?.filter((cardData)=>{
+        return cardData.id === Number(id)
+      }))
+    }
+  },[getCardsData])
+  
+
   // お気に入りボタン押下時処理
   const liked = () => {
     haslike(!like);
   }
   return (
     <>
-    {/* <!-- component --> */}
-    <div className="bg-gradient-to-bl from-blue-50 to-violet-50 flex items-center justify-center lg:h-screen">
-      <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-          {/* <!-- Replace this with your grid items --> */}
-          <div className="bg-white rounded-lg border p-4">
-            <img src="https://placehold.co/300x200/d1d4ff/352cb5.png" alt="Placeholder Image" className="w-full h-48 rounded-md object-cover"></img>
-            <div className="px-1 py-4">
-              <div className="grid grid-cols-2">
-                <div className="font-bold text-xl mb-2">Blog Title</div>
-                <div className={"justify-self-end fill-red-500" + (like ? " fill-red-500" : "")}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={"w-6 h-6 justify-end fill-red-500" + (like && "fill-red-500")} onClick={liked}>
-                    <path className={like ? "fill-pink-500" : ""} strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-gray-700 text-base">
-                This is a simple blog card example using Tailwind CSS. You can replace this text with your own blog content.
-              </p>
-            </div>
-            <div className="px-1 py-4 mt-5">
+      <div
+        className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark dark:text-white text-surface mt-10">
+        <div className="relative overflow-hidden bg-cover bg-no-repeat">
+          <img
+            className="rounded-t-lg mx-auto"
+            src="https://tecdn.b-cdn.net/img/new/slides/041.webp"
+            alt="" />
+        </div>
+        
+        <div className="p-6">
+          <div className="grid grid-cols-2 mb-3">
+            <p className="text-base text-surface/75 dark:text-neutral-300 text-left md:text-center">
+              <small>
+                By ユーザ名
+              </small>
+            </p>
+            <p className="text-base text-surface/75 dark:text-neutral-300 mb-3 text-right align-bottom md:text-center">
+              <small>
+                Last updated {cardsDataDetail.length > 0 && cardsDataDetail[0].updated_at}
+              </small>
+            </p>
+          </div>
+          <h5
+            className="mb-2 text-xl font-medium leading-tight text-center">
+            {cardsDataDetail.length > 0 && cardsDataDetail[0].title}
+          </h5>
+          <hr />
+          <p className="mb-4 text-base mt-5">
+            {cardsDataDetail.length > 0 && cardsDataDetail[0].content}
+          </p>
+          <hr />
+          <div className="text-center">
+            {cardsDataDetail.length > 0 && loginUserdata.id === cardsDataDetail[0].user_id ?
+              <>
+                <button
+                  type="button"
+                  className="mt-5 mr-3 inline-block rounded bg-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-green-400 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                  data-twe-ripple-init
+                  data-twe-ripple-color="light">
+                  編集
+                </button>
+                <button
+                  type="button"
+                  className="mt-5 mr-3 inline-block rounded bg-red-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-red-400 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                  data-twe-ripple-init
+                  data-twe-ripple-color="light">
+                  削除
+                </button>
+              </>
+              :<></>
+            }
             <button
-              className="block w-full select-none rounded-lg bg-pink-500 py-2 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
-              data-ripple-light="true"
-            >Read More
+              className="mt-5 inline-block rounded bg-pink-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-pink-400 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              data-twe-ripple-init
+              data-twe-ripple-color="light">
+              お気に入り
             </button>
-            </div>
           </div>
-          <div className="bg-white rounded-lg border p-4">
-            <img src="https://placehold.co/300x200/d1d4ff/352cb5.png" alt="Placeholder Image" className="w-full h-48 rounded-md object-cover"></img>
-            <div className="px-1 py-4">
-              <div className="font-bold text-xl mb-2">Blog Title</div>
-              <p className="text-gray-700 text-base">
-                This is a simple blog card example using Tailwind CSS. You can replace this text with your own blog content.
-              </p>
-            </div>
-            <div className="px-1 py-4">
-              <a href="#" className="text-blue-500 hover:underline">Read More</a>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg border p-4">
-            <img src="https://placehold.co/300x200/d1d4ff/352cb5.png" alt="Placeholder Image" className="w-full h-48 rounded-md object-cover"></img>
-            <div className="px-1 py-4">
-              <div className="font-bold text-xl mb-2">Blog Title</div>
-              <p className="text-gray-700 text-base">
-                This is a simple blog card example using Tailwind CSS. You can replace this text with your own blog content.
-              </p>
-            </div>
-            <div className="px-1 py-4">
-              <a href="#" className="text-blue-500 hover:underline">Read More</a>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg border p-4">
-            <img src="https://placehold.co/300x200/d1d4ff/352cb5.png" alt="Placeholder Image" className="w-full h-48 rounded-md object-cover"></img>
-            <div className="px-1 py-4">
-              <div className="font-bold text-xl mb-2">Blog Title</div>
-              <p className="text-gray-700 text-base">
-                This is a simple blog card example using Tailwind CSS. You can replace this text with your own blog content.
-              </p>
-            </div>
-            <div className="px-1 py-4">
-            <button
-      className="block w-full select-none rounded-lg bg-pink-500 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-      type="button"
-      data-ripple-light="true"
-    >Read More</button>
-            </div>
-          </div>
-          {/* <!-- Add more items as needed --> */}
         </div>
       </div>
-    </div>
     </>
   )
 }

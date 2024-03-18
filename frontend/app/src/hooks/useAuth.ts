@@ -4,15 +4,16 @@ import {User} from "../../types/api/user"
 
 export const useAuth = () =>{
     // TODO 仮のユーザデータ
-    let data:User | undefined = {
-        name:"test",
-        email:"test@email.com",
+    let loginUserdata:User | undefined = {
+        id: 1,
+        name:"test1",
+        email:"test1@email.com",
         img: "aaa",
         is_admin: false
     }
 
     // TODO ユーザーデータ取得
-    const login = useCallback(() => {
+    const getLoginUser = useCallback(() => {
         // axios.get<User>("")
         // .then((res) => {
             // data = res.data
@@ -21,6 +22,7 @@ export const useAuth = () =>{
         // })
     },[])
 
+    // 未ログイン時のメニューを表示したい場合に設定
     // data = undefined
-    return {data}
+    return {loginUserdata}
 }

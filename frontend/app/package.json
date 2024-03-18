@@ -26,6 +26,7 @@
     "react-router-dom": "^6.22.1",
     "recoil": "^0.7.7",
     "tinymce": "^6.8.3",
+    "tw-elements": "^2.0.0",
     "tw-elements-react": "^1.0.0-alpha2"
   },
   "devDependencies": {
