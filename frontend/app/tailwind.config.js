@@ -32,6 +32,9 @@ export default {
           }
         }
       },
+      minHeight:{
+        '90': '90vh'
+      }
     },
   },
   plugins: [require("tw-elements-react/dist/plugin.cjs")],

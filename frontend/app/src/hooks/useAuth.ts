@@ -23,6 +23,6 @@ export const useAuth = () =>{
     },[])
 
     // 未ログイン時のメニューを表示したい場合に設定
-    // data = undefined
+    // loginUserdata = undefined
     return {loginUserdata}
 }

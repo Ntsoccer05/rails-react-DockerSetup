@@ -12,16 +12,13 @@ import { useParams } from 'react-router-dom'
 const loginedNavigation = [
   { name: 'ホーム', href: '/', current: false },
   { name: '新規作成', href: '/create', current: false },
-  { name: 'プロジェクト', href: '#', current: false },
-  { name: 'お問い合わせ', href: '#', current: false },
+  { name: 'お問い合わせ', href: '/contact', current: false },
 ]
 
 // 未ログイン時のメニュー
 const defaultNavigation = [
   { name: 'ホーム', href: '/', current: false },
-  { name: 'チーム', href: '#', current: false },
-  { name: 'プロジェクト', href: '#', current: false },
-  { name: 'お問い合わせ', href: '#', current: false },
+  { name: 'お問い合わせ', href: '/contact', current: false },
 ]
 
 // 現在表示中のメニューのレイアウトを変更する
@@ -144,7 +141,7 @@ export const Header = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="profile/setting"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               プロフィール
@@ -154,7 +151,7 @@ export const Header = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="/profile/setting"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               設定
@@ -178,14 +175,20 @@ export const Header = () => {
                       <div className="flex space-x-4">
                           <Link
                               to="/login"
-                              className='text-gray-300 hover:bg-gray-700 hover:text-whitepx-3 py-2 text-sm font-medium'
+                              className={classNames(
+                                pathname == "/login" ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-2 py-2 text-sm font-medium'
+                              )}
                               // onClick={()=> setDispDialog(true)}
                           >
                               ログイン
                           </Link>
                           <Link
-                              to="/signin"
-                              className='text-gray-300 hover:bg-gray-700 hover:text-whitepx-3 py-2 text-sm font-medium'
+                              to="/register"
+                              className={classNames(
+                                pathname == "/register" ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-2 py-2 text-sm font-medium'
+                              )}
                           >
                               サインイン
                           </Link>

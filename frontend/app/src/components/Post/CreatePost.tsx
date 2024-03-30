@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { showMessage, showMessageContent, showMessageStatus, showMessageTitle } from '../../store/showMessage';
-import { TEInput } from "tw-elements-react";
+import { TEInput, TESelect } from "tw-elements-react";
 import { showDialog } from '../../store/showDialog';
 import { Dialog } from '../Dialog/Dialog';
   
@@ -64,18 +64,34 @@ export const CreatePost = () => {
         // setDispMessageStatus('info');
         // })
     }
+
+    //カテゴリー内容（仮）
+    const categories = [
+        { text: "One", value: 1 },
+        { text: "Two", value: 2 },
+        { text: "Three", value: 3 },
+        { text: "Four", value: 4 },
+        { text: "Five", value: 5 },
+      ];
     
     return (
         <div className='z-0 relative'>
             <h1 className='mt-10 mb-10 text-center text-2xl'>記事作成ページ</h1>
             <form>
-                <TEInput
-                    type="text"
-                    id="title"
-                    label="タイトル"
-                    counter
-                    maxLength={50}
-                ></TEInput>
+                <div className='max-w-screen-lg mx-auto'>
+                    <TEInput
+                        type="text"
+                        id="title"
+                        label="タイトル"
+                        counter
+                        maxLength={50}
+                    ></TEInput>
+                </div>
+                <div className="flex justify-center">
+                    <div className="relative mb-3 md:w-96 pt-5">
+                        <TESelect data={categories} label="カテゴリー" />
+                    </div>
+                </div>
                 <div className='mb-10'></div>
                 {/* TinyMCE 6を利用(ドキュメント：https://www.tiny.cloud/docs/tinymce/6/) */}
                 <Editor
