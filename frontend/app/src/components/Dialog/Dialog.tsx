@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { showDialog } from "../../store/showDialog";
 import {

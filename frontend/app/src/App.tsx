@@ -1,7 +1,6 @@
+import { RouterConfig } from '../router/route'
 import './App.css'
-import {RouterConfig} from '../router/route'
 import { Header } from './components/Header/Header'
-import { BrowserRouter } from 'react-router-dom'
 import {RecoilRoot} from "recoil"
 
 function App() {
@@ -9,9 +8,8 @@ function App() {
     <>
     {/* react-router-domをコンポーネント内で使用するにはBrowserRouterで囲む必要がある */}
       <RecoilRoot>
-        <BrowserRouter>
-            <Header />
-        </BrowserRouter>
+        <Header />
+        {/* ルーティング */}
         <RouterConfig />
       </RecoilRoot>
     </>

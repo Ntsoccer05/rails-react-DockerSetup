@@ -1,39 +1,46 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { Message } from '../Message/Message'
-import { Dialog } from '../Dialog/Dialog'
 import { useRecoilState } from "recoil"
-import { showMessage } from '../../store/showMessage'
-import { showDialog } from '../../store/showDialog'
+import { showMessage, showMessageContent, showMessageStatus, showMessageTitle } from '../../store/showMessage'
+import { useParams } from 'react-router-dom'
 
+// ログイン時のメニュー
 const loginedNavigation = [
-  { name: 'ホーム', href: '#', current: true },
-  { name: '新規作成', href: 'create', current: false },
-  { name: 'プロジェクト', href: '#', current: false },
-  { name: 'お問い合わせ', href: '#', current: false },
+  { name: 'ホーム', href: '/', current: false },
+  { name: '新規作成', href: '/create', current: false },
+  { name: 'お問い合わせ', href: '/contact', current: false },
 ]
 
+// 未ログイン時のメニュー
 const defaultNavigation = [
-  { name: 'ホーム', href: '#', current: true },
-  { name: 'チーム', href: '#', current: false },
-  { name: 'プロジェクト', href: '#', current: false },
-  { name: 'お問い合わせ', href: '#', current: false },
+  { name: 'ホーム', href: '/', current: false },
+  { name: 'お問い合わせ', href: '/contact', current: false },
 ]
 
+// 現在表示中のメニューのレイアウトを変更する
 function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 
 export const Header = () => {
-  const {data} = useAuth();
-  const [ dispMessage, setDispMessage ] = useRecoilState(showMessage);
-  const [ dispDialog, setDispDialog ] = useRecoilState(showDialog);
+  // ログインユーザー情報取得
+  const { loginUserdata } = useAuth();
 
-  // メッセージを表示する処理
+  // URLパスを取得
+  const {pathname} = useLocation();
+
+  // トーストメッセージを表示するか
+  const [ dispMessage, setDispMessage ] = useRecoilState(showMessage);
+  const [ dispMessageContent, setDispMessageContent ] = useRecoilState(showMessageContent);
+  const [ dispMessageTitle, setDispMessageTitle ] = useRecoilState(showMessageTitle);
+  const [ dispMessageStatus, setDispMessageStatus ] = useRecoilState(showMessageStatus);
+
+  // トーストメッセージを表示する処理
   const dispToastMessage = () => {
     setDispMessage(!dispMessage);
   }
@@ -67,16 +74,16 @@ export const Header = () => {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      { data ? loginedNavigation.map((item) => (
+                      { loginUserdata ? loginedNavigation.map((item) => (
                         <Link
                           key={item.name}
                           to={item.href}
                           className={classNames(
-                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            pathname == item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                             'rounded-md px-3 py-2 text-sm font-medium'
                           )}
                           aria-current={item.current ? 'page' : undefined}
-                          onClick={dispToastMessage}
+                          // onClick={dispToastMessage}
                         >
                           {item.name}
                         </Link>
@@ -86,11 +93,11 @@ export const Header = () => {
                         key={item.name}
                         to={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          pathname == item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
-                        onClick={dispToastMessage}
+                        // onClick={dispToastMessage}
                       >
                         {item.name}
                       </Link>
@@ -109,7 +116,7 @@ export const Header = () => {
                   </button>
 
                   {/* Profile dropdown */}
-                  {data ? <Menu as="div" className="relative ml-3">
+                  {loginUserdata ? <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
@@ -134,7 +141,7 @@ export const Header = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="profile/setting"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               プロフィール
@@ -144,7 +151,7 @@ export const Header = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="#"
+                              to="/profile/setting"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               設定
@@ -167,15 +174,21 @@ export const Header = () => {
                   : <div className="hidden sm:ml-6 sm:block">
                       <div className="flex space-x-4">
                           <Link
-                              to="#"
-                              className='text-gray-300 hover:bg-gray-700 hover:text-whitepx-3 py-2 text-sm font-medium'
-                              onClick={()=> setDispDialog(true)}
+                              to="/login"
+                              className={classNames(
+                                pathname == "/login" ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-2 py-2 text-sm font-medium'
+                              )}
+                              // onClick={()=> setDispDialog(true)}
                           >
                               ログイン
                           </Link>
                           <Link
-                              to="#"
-                              className='text-gray-300 hover:bg-gray-700 hover:text-whitepx-3 py-2 text-sm font-medium'
+                              to="/register"
+                              className={classNames(
+                                pathname == "/register" ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-2 py-2 text-sm font-medium'
+                              )}
                           >
                               サインイン
                           </Link>
@@ -188,7 +201,7 @@ export const Header = () => {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
-                {data ? loginedNavigation.map((item) => (
+                {loginUserdata ? loginedNavigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as="a"
@@ -221,8 +234,7 @@ export const Header = () => {
           </>
         )}
       </Disclosure>
-      <Message status='info' title="遷移完了" duration={5000}>遷移できません。</Message>
-      <Dialog title="遷移完了">遷移できません。</Dialog>
+    <Message status={dispMessageStatus} title={dispMessageTitle} duration={10000}>{dispMessageContent}</Message>
     </>
   )
 }
